@@ -1,4 +1,4 @@
-package util;
+package de.nuttercode.util;
 
 public interface Validatable {
 

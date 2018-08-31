@@ -1,4 +1,4 @@
-package util;
+package de.nuttercode.util;
 
 public abstract class TokenCarrier implements Validatable {
 

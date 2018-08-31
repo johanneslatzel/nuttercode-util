@@ -1,6 +1,6 @@
 package de.nuttercode.util.buffer;
 
-import util.Closeable;
+import de.nuttercode.util.Closeable;
 
 public interface ModeableBuffer extends Closeable {
 	

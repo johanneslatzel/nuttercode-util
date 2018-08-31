@@ -2,7 +2,7 @@ package de.nuttercode.util.buffer;
 
 import java.nio.ByteBuffer;
 
-import util.Closeable;
+import de.nuttercode.util.Closeable;
 
 public interface ReadableBuffer extends Closeable {
 

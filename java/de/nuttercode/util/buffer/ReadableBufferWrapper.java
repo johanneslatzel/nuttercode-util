@@ -3,6 +3,8 @@ package de.nuttercode.util.buffer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
+import de.nuttercode.util.Assurance;
+
 public class ReadableBufferWrapper implements ReadableBuffer {
 
 	private final ReadableBuffer buffer;

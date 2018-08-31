@@ -2,6 +2,7 @@ package de.nuttercode.util.buffer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import de.nuttercode.util.Assurance;
 
 public class WriteableBufferWrapper implements WriteableBuffer {
 
