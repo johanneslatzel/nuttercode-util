@@ -1,5 +1,8 @@
 package de.nuttercode.util;
 
+import de.nuttercode.util.buffer.BufferMode;
+import de.nuttercode.util.buffer.DynamicBuffer;
+
 /**
  * provides parameter checks and throws IllegalArgumentException if appropriate
  * 
@@ -79,6 +82,22 @@ public final class Assurance {
 	public static void assureBoundaries(double value, double leftBoundary, double rightBoundary) {
 		if (value < leftBoundary || value > rightBoundary)
 			throw new IllegalArgumentException("score is not element of [" + leftBoundary + ", " + rightBoundary + "]");
+	}
+
+	/**
+	 * 
+	 * @param buffer
+	 * @param mode
+	 * @throws IllegalArgumentException
+	 *             if buffer or mode is null and buffer.getMode() is not equal to
+	 *             mode
+	 */
+	public static void assureMode(DynamicBuffer buffer, BufferMode mode) {
+		assureNotNull(buffer);
+		assureNotNull(mode);
+		if (!buffer.getMode().equals(mode))
+			throw new IllegalArgumentException(
+					"the mode of the buffer is " + buffer.getMode() + " but should be " + mode);
 	}
 
 }
