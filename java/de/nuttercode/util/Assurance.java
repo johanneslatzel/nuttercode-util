@@ -89,15 +89,28 @@ public final class Assurance {
 	 * @param buffer
 	 * @param mode
 	 * @throws IllegalArgumentException
-	 *             if buffer or mode is null and buffer.getMode() is not equal to
-	 *             mode
+	 *             if buffer or mode is null
+	 * @throws IllegalStateException
+	 *             if buffer.getMode() is not equal to mode
 	 */
 	public static void assureMode(DynamicBuffer buffer, BufferMode mode) {
 		assureNotNull(buffer);
 		assureNotNull(mode);
 		if (!buffer.getMode().equals(mode))
-			throw new IllegalArgumentException(
-					"the mode of the buffer is " + buffer.getMode() + " but should be " + mode);
+			throw new IllegalStateException("the mode of the buffer is " + buffer.getMode() + " but should be " + mode);
+	}
+
+	/**
+	 * @param closeable
+	 * @throws IllegalArgumentException
+	 *             if closeable is null
+	 * @throws {@link
+	 *             IllegalStateException} if closeable is closed
+	 */
+	public static void assureNotClosed(Closeable closeable) {
+		Assurance.assureNotNull(closeable);
+		if (closeable.isClosed())
+			throw new IllegalStateException("the closeable " + closeable + " is closed");
 	}
 
 }
