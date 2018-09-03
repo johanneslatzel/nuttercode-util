@@ -1,9 +1,14 @@
 package de.nuttercode.util.buffer;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import de.nuttercode.util.Assurance;
 
+/**
+ * wrapper for any {@link WriteableBuffer}
+ * 
+ * @author Johannes B. Latzel
+ *
+ */
 public class WriteableBufferWrapper implements WriteableBuffer {
 
 	private final WriteableBuffer buffer;
@@ -11,16 +16,6 @@ public class WriteableBufferWrapper implements WriteableBuffer {
 	public WriteableBufferWrapper(WriteableBuffer buffer) {
 		Assurance.assureNotNull(buffer);
 		this.buffer = buffer;
-	}
-
-	@Override
-	public boolean isClosed() {
-		return buffer.isClosed();
-	}
-
-	@Override
-	public void close() throws IOException {
-		buffer.close();
 	}
 
 	@Override

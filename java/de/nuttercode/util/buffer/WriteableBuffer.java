@@ -2,9 +2,7 @@ package de.nuttercode.util.buffer;
 
 import java.nio.ByteBuffer;
 
-import de.nuttercode.util.Closeable;
-
-public interface WriteableBuffer extends Closeable {
+public interface WriteableBuffer {
 
 	void putInt(int i);
 
@@ -27,5 +25,9 @@ public interface WriteableBuffer extends Closeable {
 	void putByteBuffer(ByteBuffer byteBuffer);
 
 	void putBuffer(ReadableBuffer someBuffer);
+
+	default WriteableBuffer writeableView() {
+		return new WriteableBufferWrapper(this);
+	}
 
 }
