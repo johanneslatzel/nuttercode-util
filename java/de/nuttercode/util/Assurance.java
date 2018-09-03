@@ -113,4 +113,30 @@ public final class Assurance {
 			throw new IllegalStateException("the closeable " + closeable + " is closed");
 	}
 
+	/**
+	 * @param initializable
+	 * @throws IllegalArgumentException
+	 *             if initializable is null
+	 * @throws {@link
+	 *             IllegalStateException} if initializable is not initialized
+	 */
+	public static void assureInitialized(Initializable initializable) {
+		Assurance.assureNotNull(initializable);
+		if (!initializable.isInitialized())
+			throw new IllegalStateException("the initializable " + initializable + " is not initialized");
+	}
+
+	/**
+	 * @param initializable
+	 * @throws IllegalArgumentException
+	 *             if initializable is null
+	 * @throws {@link
+	 *             IllegalStateException} if initializable is initialized
+	 */
+	public static void assureNotInitialized(Initializable initializable) {
+		Assurance.assureNotNull(initializable);
+		if (initializable.isInitialized())
+			throw new IllegalStateException("the initializable " + initializable + " is initialized");
+	}
+
 }
