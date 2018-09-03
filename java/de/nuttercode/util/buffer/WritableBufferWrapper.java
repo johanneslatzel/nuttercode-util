@@ -4,16 +4,16 @@ import java.nio.ByteBuffer;
 import de.nuttercode.util.Assurance;
 
 /**
- * wrapper for any {@link WriteableBuffer}
+ * wrapper for any {@link WritableBuffer}
  * 
  * @author Johannes B. Latzel
  *
  */
-public class WriteableBufferWrapper implements WriteableBuffer {
+public class WritableBufferWrapper implements WritableBuffer {
 
-	private final WriteableBuffer buffer;
+	private final WritableBuffer buffer;
 
-	public WriteableBufferWrapper(WriteableBuffer buffer) {
+	public WritableBufferWrapper(WritableBuffer buffer) {
 		Assurance.assureNotNull(buffer);
 		this.buffer = buffer;
 	}

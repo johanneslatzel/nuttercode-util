@@ -12,7 +12,7 @@ import de.nuttercode.util.Assurance;
  * @author Johannes B. Latzel
  *
  */
-public class DynamicBuffer implements WriteableBuffer, ReadableBuffer {
+public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 
 	/**
 	 * default size of the copy buffer in bytes
