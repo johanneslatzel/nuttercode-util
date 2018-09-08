@@ -1,5 +1,7 @@
 package de.nuttercode.util;
 
+import java.time.Instant;
+
 import de.nuttercode.util.buffer.BufferMode;
 import de.nuttercode.util.buffer.DynamicBuffer;
 
@@ -137,6 +139,20 @@ public final class Assurance {
 		Assurance.assureNotNull(initializable);
 		if (initializable.isInitialized())
 			throw new IllegalStateException("the initializable " + initializable + " is initialized");
+	}
+
+	/**
+	 * 
+	 * @param marker
+	 *            some point in time against which instant will be measured
+	 * @param instant
+	 *            some instant
+	 * @throws IllegalArgumentException
+	 *             when marker is after instant
+	 */
+	public static void assureInstantIsNotBefore(Instant marker, Instant instant) {
+		if (marker.isAfter(instant))
+			throw new IllegalArgumentException(marker + " is after " + instant);
 	}
 
 }
