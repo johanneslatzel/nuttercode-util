@@ -2,6 +2,8 @@ package de.nuttercode.util.buffer;
 
 import java.nio.ByteBuffer;
 
+import de.nuttercode.util.assurance.NotNull;
+
 /**
  * represents a readable buffer
  * 
@@ -49,6 +51,7 @@ public interface ReadableBuffer {
 	 * 
 	 * @return next String
 	 */
+	@NotNull
 	String getString();
 
 	/**
@@ -80,7 +83,8 @@ public interface ReadableBuffer {
 	 * 
 	 * @return bytes
 	 */
-	byte[] getBytes(byte[] bytes);
+	@NotNull
+	byte[] getBytes(@NotNull byte[] bytes);
 
 	/**
 	 * @return number of bytes that can be read from the buffer
@@ -101,11 +105,13 @@ public interface ReadableBuffer {
 	 * @param outerBuffer
 	 * @return outerBuffer
 	 */
-	ByteBuffer transferDataInto(ByteBuffer outerBuffer);
+	@NotNull
+	ByteBuffer transferDataInto(@NotNull ByteBuffer outerBuffer);
 
 	/**
 	 * @return a readable view of this buffer
 	 */
+	@NotNull
 	default ReadableBuffer readableView() {
 		return new ReadableBufferWrapper(this);
 	}

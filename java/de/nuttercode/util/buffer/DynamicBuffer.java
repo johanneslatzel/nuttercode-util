@@ -2,7 +2,8 @@ package de.nuttercode.util.buffer;
 
 import java.nio.ByteBuffer;
 
-import de.nuttercode.util.Assurance;
+import de.nuttercode.util.assurance.Assurance;
+import de.nuttercode.util.assurance.NotNull;
 
 /**
  * used when a java.nio.ByteBuffer is needed but the size is unknown. be aware
@@ -22,14 +23,14 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 	/**
 	 * underlying buffer
 	 */
-	private ByteBuffer buffer;
+	private @NotNull ByteBuffer buffer;
 
 	/**
 	 * used to copy data between buffers
 	 */
-	private final byte[] copyBuffer;
+	private final @NotNull byte[] copyBuffer;
 
-	private BufferMode mode;
+	private @NotNull BufferMode mode;
 
 	/**
 	 * true if the mode can not be changed
@@ -65,7 +66,8 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 		buffer = newBuffer;
 	}
 
-	public void setMode(BufferMode mode) {
+	public void setMode(@NotNull BufferMode mode) {
+		Assurance.assureNotNull(mode);
 		if (isModeLocked())
 			throw new IllegalStateException();
 		switch (mode) {
@@ -85,7 +87,7 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 		}
 	}
 
-	public BufferMode getMode() {
+	public @NotNull BufferMode getMode() {
 		return mode;
 	}
 
@@ -103,8 +105,10 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 		return buffer.limit() - buffer.position();
 	}
 
+	@NotNull
 	@Override
-	public ByteBuffer transferDataInto(ByteBuffer outerBuffer) {
+	public ByteBuffer transferDataInto(@NotNull ByteBuffer outerBuffer) {
+		Assurance.assureNotNull(outerBuffer);
 		Assurance.assureMode(this, BufferMode.Read);
 		if (outerBuffer.remaining() >= buffer.remaining()) {
 			return outerBuffer.put(buffer);
@@ -150,7 +154,8 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 	}
 
 	@Override
-	public void putString(String s) {
+	public void putString(@NotNull String s) {
+		Assurance.assureNotNull(s);
 		Assurance.assureMode(this, BufferMode.Write);
 		byte[] bytes = s.getBytes();
 		putInt(bytes.length);
@@ -188,6 +193,7 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 		return buffer.getDouble();
 	}
 
+	@NotNull
 	@Override
 	public String getString() {
 		Assurance.assureMode(this, BufferMode.Read);
@@ -224,7 +230,8 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 	}
 
 	@Override
-	public void putBytes(byte[] bytes) {
+	public void putBytes(@NotNull byte[] bytes) {
+		Assurance.assureNotNull(bytes);
 		Assurance.assureMode(this, BufferMode.Write);
 		assureCapacity(bytes.length);
 		buffer.put(bytes);
@@ -236,15 +243,18 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 		return buffer.get();
 	}
 
+	@NotNull
 	@Override
-	public byte[] getBytes(byte[] bytes) {
+	public byte[] getBytes(@NotNull byte[] bytes) {
+		Assurance.assureNotNull(bytes);
 		Assurance.assureMode(this, BufferMode.Read);
 		buffer.get(bytes);
 		return bytes;
 	}
 
 	@Override
-	public void putByteBuffer(ByteBuffer byteBuffer) {
+	public void putByteBuffer(@NotNull ByteBuffer byteBuffer) {
+		Assurance.assureNotNull(byteBuffer);
 		Assurance.assureMode(this, BufferMode.Write);
 		while (byteBuffer.remaining() >= COPY_BUFFER_SIZE) {
 			byteBuffer.get(copyBuffer);
@@ -264,7 +274,8 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 	}
 
 	@Override
-	public void putBuffer(ReadableBuffer someBuffer) {
+	public void putBuffer(@NotNull ReadableBuffer someBuffer) {
+		Assurance.assureNotNull(someBuffer);
 		while (someBuffer.transferableData() > copyBuffer.length) {
 			someBuffer.getBytes(copyBuffer);
 			putBytes(copyBuffer);

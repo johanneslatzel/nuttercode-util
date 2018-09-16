@@ -2,6 +2,8 @@ package de.nuttercode.util.buffer;
 
 import java.nio.ByteBuffer;
 
+import de.nuttercode.util.assurance.NotNull;
+
 /**
  * represents a writeable buffer
  * 
@@ -54,7 +56,7 @@ public interface WritableBuffer {
 	 * 
 	 * @param s
 	 */
-	void putString(String s);
+	void putString(@NotNull String s);
 
 	/**
 	 * puts a char into the buffer and forwards its position by {@link Char#BYTES}
@@ -77,7 +79,7 @@ public interface WritableBuffer {
 	 * 
 	 * @param bytes
 	 */
-	void putBytes(byte[] bytes);
+	void putBytes(@NotNull byte[] bytes);
 
 	/**
 	 * puts all available bytes (byteBuffer.remaining()) of the byteBuffer into this
@@ -85,7 +87,7 @@ public interface WritableBuffer {
 	 * 
 	 * @param byteBuffer
 	 */
-	void putByteBuffer(ByteBuffer byteBuffer);
+	void putByteBuffer(@NotNull ByteBuffer byteBuffer);
 
 	/**
 	 * puts all available bytes (readableBuffer.transferableData()) of the
@@ -101,6 +103,7 @@ public interface WritableBuffer {
 	 * 
 	 * @return a writable view of this buffer
 	 */
+	@NotNull
 	default WritableBuffer writableView() {
 		return new WritableBufferWrapper(this);
 	}

@@ -2,7 +2,8 @@ package de.nuttercode.util.buffer;
 
 import java.nio.ByteBuffer;
 
-import de.nuttercode.util.Assurance;
+import de.nuttercode.util.assurance.Assurance;
+import de.nuttercode.util.assurance.NotNull;
 
 /**
  * wrapper for any {@link ReadableBuffer}
@@ -12,9 +13,9 @@ import de.nuttercode.util.Assurance;
  */
 public class ReadableBufferWrapper implements ReadableBuffer {
 
-	private final ReadableBuffer buffer;
+	private final @NotNull ReadableBuffer buffer;
 
-	public ReadableBufferWrapper(ReadableBuffer buffer) {
+	public ReadableBufferWrapper(@NotNull ReadableBuffer buffer) {
 		Assurance.assureNotNull(buffer);
 		this.buffer = buffer;
 	}
@@ -39,6 +40,7 @@ public class ReadableBufferWrapper implements ReadableBuffer {
 		return buffer.getDouble();
 	}
 
+	@NotNull
 	@Override
 	public String getString() {
 		return buffer.getString();
@@ -59,8 +61,9 @@ public class ReadableBufferWrapper implements ReadableBuffer {
 		return buffer.getShort();
 	}
 
+	@NotNull
 	@Override
-	public byte[] getBytes(byte[] bytes) {
+	public byte[] getBytes(@NotNull byte[] bytes) {
 		return buffer.getBytes(bytes);
 	}
 
@@ -69,8 +72,9 @@ public class ReadableBufferWrapper implements ReadableBuffer {
 		return buffer.transferableData();
 	}
 
+	@NotNull
 	@Override
-	public ByteBuffer transferDataInto(ByteBuffer outerBuffer) {
+	public ByteBuffer transferDataInto(@NotNull ByteBuffer outerBuffer) {
 		return buffer.transferDataInto(outerBuffer);
 	}
 

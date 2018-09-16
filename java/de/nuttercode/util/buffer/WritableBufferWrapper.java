@@ -1,7 +1,9 @@
 package de.nuttercode.util.buffer;
 
 import java.nio.ByteBuffer;
-import de.nuttercode.util.Assurance;
+
+import de.nuttercode.util.assurance.Assurance;
+import de.nuttercode.util.assurance.NotNull;
 
 /**
  * wrapper for any {@link WritableBuffer}
@@ -11,9 +13,9 @@ import de.nuttercode.util.Assurance;
  */
 public class WritableBufferWrapper implements WritableBuffer {
 
-	private final WritableBuffer buffer;
+	private final @NotNull WritableBuffer buffer;
 
-	public WritableBufferWrapper(WritableBuffer buffer) {
+	public WritableBufferWrapper(@NotNull WritableBuffer buffer) {
 		Assurance.assureNotNull(buffer);
 		this.buffer = buffer;
 	}
@@ -44,7 +46,7 @@ public class WritableBufferWrapper implements WritableBuffer {
 	}
 
 	@Override
-	public void putString(String s) {
+	public void putString(@NotNull String s) {
 		buffer.putString(s);
 	}
 
@@ -59,17 +61,17 @@ public class WritableBufferWrapper implements WritableBuffer {
 	}
 
 	@Override
-	public void putBytes(byte[] bytes) {
+	public void putBytes(@NotNull byte[] bytes) {
 		buffer.putBytes(bytes);
 	}
 
 	@Override
-	public void putByteBuffer(ByteBuffer byteBuffer) {
+	public void putByteBuffer(@NotNull ByteBuffer byteBuffer) {
 		buffer.putByteBuffer(byteBuffer);
 	}
 
 	@Override
-	public void putBuffer(ReadableBuffer someBuffer) {
+	public void putBuffer(@NotNull ReadableBuffer someBuffer) {
 		buffer.putBuffer(someBuffer);
 	}
 
