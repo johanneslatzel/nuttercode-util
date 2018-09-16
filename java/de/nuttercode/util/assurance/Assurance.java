@@ -1,7 +1,9 @@
-package de.nuttercode.util;
+package de.nuttercode.util.assurance;
 
 import java.time.Instant;
 
+import de.nuttercode.util.Closeable;
+import de.nuttercode.util.Initializable;
 import de.nuttercode.util.buffer.BufferMode;
 import de.nuttercode.util.buffer.DynamicBuffer;
 
@@ -74,7 +76,6 @@ public final class Assurance {
 	}
 
 	/**
-	 * 
 	 * @param value
 	 * @param leftBoundary
 	 * @param rightBoundary
@@ -82,6 +83,18 @@ public final class Assurance {
 	 *             if score is not element of [leftBoundary, rightBoundary]
 	 */
 	public static void assureBoundaries(double value, double leftBoundary, double rightBoundary) {
+		if (value < leftBoundary || value > rightBoundary)
+			throw new IllegalArgumentException("score is not element of [" + leftBoundary + ", " + rightBoundary + "]");
+	}
+
+	/**
+	 * @param value
+	 * @param leftBoundary
+	 * @param rightBoundary
+	 * @throws IllegalArugmentException
+	 *             if score is not element of [leftBoundary, rightBoundary]
+	 */
+	public static void assureBoundaries(long value, long leftBoundary, long rightBoundary) {
 		if (value < leftBoundary || value > rightBoundary)
 			throw new IllegalArgumentException("score is not element of [" + leftBoundary + ", " + rightBoundary + "]");
 	}
@@ -153,6 +166,18 @@ public final class Assurance {
 	public static void assureInstantIsNotBefore(Instant marker, Instant instant) {
 		if (marker.isAfter(instant))
 			throw new IllegalArgumentException(marker + " is after " + instant);
+	}
+
+	/**
+	 * 
+	 * @param begin
+	 * @param end
+	 * @throws IllegalArgumentException
+	 *             if begin > end
+	 */
+	public static void assureSmallerEquals(long begin, long end) {
+		if (begin > end)
+			throw new IllegalArgumentException(begin + " > " + end);
 	}
 
 }
