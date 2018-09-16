@@ -1,4 +1,4 @@
-package de.nuttercode.util.test;
+package de.nuttercode.util;
 
 /**
  * trivial implementation of a stopwatch. can be used to processes with low

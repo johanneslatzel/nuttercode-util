@@ -1,4 +1,4 @@
-package de.nuttercode.util.test;
+package de.nuttercode.util;
 
 import de.nuttercode.util.assurance.Assurance;
 import de.nuttercode.util.assurance.NotNull;
