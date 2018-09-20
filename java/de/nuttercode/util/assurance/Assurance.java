@@ -96,7 +96,7 @@ public final class Assurance {
 	 */
 	public static void assureBoundaries(long value, long leftBoundary, long rightBoundary) {
 		if (value < leftBoundary || value > rightBoundary)
-			throw new IllegalArgumentException("score is not element of [" + leftBoundary + ", " + rightBoundary + "]");
+			throw new IllegalArgumentException("value is not element of [" + leftBoundary + ", " + rightBoundary + "]");
 	}
 
 	/**
