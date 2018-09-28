@@ -1,10 +1,14 @@
 package de.nuttercode.util.cache;
 
 import java.lang.ref.Reference;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
- * Cache values by wrapping them in {@link Reference}s of type R.
+ * Caches values by wrapping them in {@link Reference}s of type R.
  * 
  * @author Johannes B. Latzel
  *
@@ -50,7 +54,7 @@ public abstract class ReferenceCache<K, V, R extends Reference<V>> implements Ca
 	public void cache(K key, V value) {
 		strongCache.cache(key, createReference(value));
 	}
-	
+
 	@Override
 	public V get(K key) {
 		assureContains(key);
@@ -79,4 +83,36 @@ public abstract class ReferenceCache<K, V, R extends Reference<V>> implements Ca
 		return "ReferenceCache [strongCache=" + strongCache + "]";
 	}
 
+	@Override
+	public void clear() {
+		strongCache.clear();
+	}
+
+	@Override
+	public void clean() {
+		Set<K> keySet = new HashSet<>(getKeySet());
+		for (K k : keySet)
+			if (strongCache.get(k).get() == null)
+				strongCache.remove(k);
+	}
+
+	@Override
+	public Set<K> getKeySet() {
+		return strongCache.getKeySet();
+	}
+
+	/**
+	 * @return Collection of all not-null values in this cache
+	 */
+	@Override
+	public Collection<V> getValueCollection() {
+		ArrayList<V> valueList = new ArrayList<>();
+		V value;
+		for (K k : getKeySet()) {
+			value = strongCache.get(k).get();
+			if (value != null)
+				valueList.add(value);
+		}
+		return valueList;
+	}
 }

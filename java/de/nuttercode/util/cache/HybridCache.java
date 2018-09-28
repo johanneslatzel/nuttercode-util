@@ -1,5 +1,10 @@
 package de.nuttercode.util.cache;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Combines a {@link StrongCache}, {@link SoftCache}, and a {@link WeakCache}.
  * Choose via {@link #cache(Object, Object, CacheType)} which cache should be
@@ -131,6 +136,37 @@ public class HybridCache<K, V> implements Cache<K, V> {
 	public String toString() {
 		return "HybridCache [strongCache=" + strongCache + ", softCache=" + softCache + ", weakCache=" + weakCache
 				+ ", size()=" + size() + "]";
+	}
+
+	@Override
+	public void clear() {
+		strongCache.clear();
+		softCache.clear();
+		weakCache.clear();
+	}
+
+	@Override
+	public void clean() {
+		softCache.clean();
+		weakCache.clean();
+	}
+
+	@Override
+	public Set<K> getKeySet() {
+		Set<K> keySet = new HashSet<>(size());
+		keySet.addAll(strongCache.getKeySet());
+		keySet.addAll(softCache.getKeySet());
+		keySet.addAll(weakCache.getKeySet());
+		return keySet;
+	}
+
+	@Override
+	public Collection<V> getValueCollection() {
+		ArrayList<V> valueList = new ArrayList<>(size());
+		valueList.addAll(strongCache.getValueCollection());
+		valueList.addAll(softCache.getValueCollection());
+		valueList.addAll(weakCache.getValueCollection());
+		return valueList;
 	}
 
 }

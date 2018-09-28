@@ -1,8 +1,11 @@
 package de.nuttercode.util.cache;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * A {@link Cache} which references all values with strong references. This
@@ -68,6 +71,21 @@ public class StrongCache<K, V> implements Cache<K, V> {
 	@Override
 	public String toString() {
 		return "StrongCache [size()=" + size() + "]";
+	}
+
+	@Override
+	public void clear() {
+		strongMap.clear();
+	}
+
+	@Override
+	public Set<K> getKeySet() {
+		return Collections.unmodifiableSet(strongMap.keySet());
+	}
+
+	@Override
+	public Collection<V> getValueCollection() {
+		return Collections.unmodifiableCollection(strongMap.values());
 	}
 
 }

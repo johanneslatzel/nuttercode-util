@@ -1,6 +1,8 @@
 package de.nuttercode.util.cache;
 
+import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * Caches store objects in memory. The time to live is specified by the
@@ -51,5 +53,27 @@ public interface Cache<K, V> {
 	 * @return the total number of elements cached.
 	 */
 	int size();
+
+	/**
+	 * removes all cached entries.
+	 */
+	void clear();
+
+	/**
+	 * optional operation. cleans the cache of redundant resources.
+	 */
+	default void clean() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @return unmodifiable set view of all usable keys of this cache
+	 */
+	Set<K> getKeySet();
+
+	/**
+	 * @return unmodifiable collection view of all usable values of this cache
+	 */
+	Collection<V> getValueCollection();
 
 }
