@@ -180,4 +180,16 @@ public final class Assurance {
 			throw new IllegalArgumentException(begin + " > " + end);
 	}
 
+	/**
+	 * 
+	 * @param begin
+	 * @param end
+	 * @throws IllegalArgumentException
+	 *             if begin > end
+	 */
+	public static void assureSmallerEquals(double begin, double end) {
+		if (begin > end)
+			throw new IllegalArgumentException(begin + " > " + end);
+	}
+
 }
