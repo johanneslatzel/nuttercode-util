@@ -118,7 +118,7 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 			outerBuffer.put(copyBuffer);
 		}
 		if (buffer.remaining() > 0) {
-			byte[] tempBuffer = new byte[buffer.remaining()];
+			byte[] tempBuffer = new byte[outerBuffer.remaining()];
 			buffer.get(tempBuffer);
 			outerBuffer.put(tempBuffer);
 		}
