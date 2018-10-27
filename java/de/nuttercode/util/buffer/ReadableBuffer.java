@@ -1,8 +1,11 @@
 package de.nuttercode.util.buffer;
 
 import java.nio.ByteBuffer;
+import java.util.Collection;
 
+import de.nuttercode.util.assurance.Assurance;
 import de.nuttercode.util.assurance.NotNull;
+import de.nuttercode.util.buffer.transformer.ObjectTransformer;
 
 /**
  * represents a readable buffer
@@ -114,6 +117,26 @@ public interface ReadableBuffer {
 	@NotNull
 	default ReadableBuffer readableView() {
 		return new ReadableBufferWrapper(this);
+	}
+
+	/**
+	 * gets the next n elements from this buffer and puts them into the collection.
+	 * n is set by a call to {@link #getInt()}.
+	 * 
+	 * @param transformer
+	 * @param collection
+	 * @return collection
+	 */
+	@NotNull
+	default <T, C extends Collection<T>> C getCollection(@NotNull ObjectTransformer<T> transformer,
+			@NotNull C collection) {
+		Assurance.assureNotNull(transformer);
+		Assurance.assureNotNull(collection);
+		int size = getInt();
+		while (size-- > 0) {
+			collection.add(transformer.getFrom(this));
+		}
+		return collection;
 	}
 
 }

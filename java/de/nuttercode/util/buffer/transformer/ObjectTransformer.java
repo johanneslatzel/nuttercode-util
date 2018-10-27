@@ -1,6 +1,8 @@
-package de.nuttercode.util.buffer;
+package de.nuttercode.util.buffer.transformer;
 
 import de.nuttercode.util.assurance.NotNull;
+import de.nuttercode.util.buffer.ReadableBuffer;
+import de.nuttercode.util.buffer.WritableBuffer;
 
 /**
  * extension for objects to be able to be put into {@link WritableBuffer} and

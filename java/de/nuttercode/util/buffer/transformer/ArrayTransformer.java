@@ -1,9 +1,11 @@
-package de.nuttercode.util.buffer;
+package de.nuttercode.util.buffer.transformer;
 
 import java.util.Arrays;
 
 import de.nuttercode.util.assurance.Assurance;
 import de.nuttercode.util.assurance.NotNull;
+import de.nuttercode.util.buffer.ReadableBuffer;
+import de.nuttercode.util.buffer.WritableBuffer;
 
 /**
  * {@link ObjectTransformer} implementation for generic arrays
