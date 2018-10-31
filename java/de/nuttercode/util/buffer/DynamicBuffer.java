@@ -129,6 +129,13 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 	}
 
 	@Override
+	public void putShort(short s) {
+		Assurance.assureMode(this, BufferMode.Write);
+		assureCapacity(Short.BYTES);
+		buffer.putShort(s);
+	}
+
+	@Override
 	public void putInt(int i) {
 		Assurance.assureMode(this, BufferMode.Write);
 		assureCapacity(Integer.BYTES);
@@ -268,12 +275,6 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 			byteBuffer.get(tempBuffer);
 			putBytes(tempBuffer);
 		}
-	}
-
-	@Override
-	public void putShort(short s) {
-		Assurance.assureMode(this, BufferMode.Write);
-		buffer.putShort(s);
 	}
 
 	@Override
