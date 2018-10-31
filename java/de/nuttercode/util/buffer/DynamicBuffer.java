@@ -30,6 +30,9 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 	 */
 	private final @NotNull byte[] copyBuffer;
 
+	/**
+	 * mode of the buffer
+	 */
 	private @NotNull BufferMode mode;
 
 	/**
