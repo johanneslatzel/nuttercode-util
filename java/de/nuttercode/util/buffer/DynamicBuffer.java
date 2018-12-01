@@ -209,7 +209,8 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 			throw new IllegalStateException();
 		byte[] bytes = new byte[getInt()];
 		if (transferableData() < bytes.length)
-			throw new IllegalStateException();
+			throw new IllegalStateException(
+					"transferableData() < bytes.length: " + transferableData() + " < " + bytes.length);
 		return new String(getBytes(bytes));
 	}
 
