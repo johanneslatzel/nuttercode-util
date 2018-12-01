@@ -76,13 +76,23 @@ public interface WritableBuffer {
 	void putByte(byte b);
 
 	/**
-	 * puts a byte[] into the buffer by putting bytes.length and the binary data
-	 * into the buffer and forwards its position by bytes.length +
-	 * {@link Integer#BYTES} bytes
+	 * puts a byte[] into the buffer by putting the binary data of bytes into the
+	 * buffer and forwards its position by bytes.length bytes
 	 * 
 	 * @param bytes
 	 */
-	void putBytes(@NotNull byte[] bytes);
+	default void putBytes(@NotNull byte[] bytes) {
+		putBytes(bytes, 0, bytes.length);
+	}
+
+	/**
+	 * puts a byte[] into the buffer by putting the binary data starting at offset
+	 * until offset + length into the buffer and forwards its position by length
+	 * bytes
+	 * 
+	 * @param bytes
+	 */
+	void putBytes(byte[] buffer, int offset, int length);
 
 	/**
 	 * puts all available bytes (byteBuffer.remaining()) of the byteBuffer into this

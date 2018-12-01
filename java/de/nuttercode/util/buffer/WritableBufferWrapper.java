@@ -73,8 +73,8 @@ public class WritableBufferWrapper implements WritableBuffer {
 	}
 
 	@Override
-	public void putBytes(@NotNull byte[] bytes) {
-		buffer.putBytes(bytes);
+	public void putBytes(@NotNull byte[] bytes, int offset, int length) {
+		buffer.putBytes(bytes, offset, length);
 	}
 
 	@Override

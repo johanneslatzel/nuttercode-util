@@ -238,11 +238,11 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 	}
 
 	@Override
-	public void putBytes(@NotNull byte[] bytes) {
+	public void putBytes(@NotNull byte[] bytes, int offset, int length) {
 		Assurance.assureNotNull(bytes);
 		Assurance.assureMode(this, BufferMode.Write);
-		assureCapacity(bytes.length);
-		buffer.put(bytes);
+		assureCapacity(length);
+		buffer.put(bytes, offset, length);
 	}
 
 	@Override
