@@ -1,6 +1,8 @@
 package de.nuttercode.util.buffer;
 
+import java.net.URI;
 import java.nio.ByteBuffer;
+import java.time.Instant;
 
 import de.nuttercode.util.assurance.Assurance;
 import de.nuttercode.util.assurance.NotNull;
@@ -18,6 +20,16 @@ public class WritableBufferWrapper implements WritableBuffer {
 	public WritableBufferWrapper(@NotNull WritableBuffer buffer) {
 		Assurance.assureNotNull(buffer);
 		this.buffer = buffer;
+	}
+
+	public void putInstant(@NotNull Instant instant) {
+		Assurance.assureNotNull(instant);
+		buffer.putString(instant.toString());
+	}
+
+	public void putUri(URI uri) {
+		Assurance.assureNotNull(uri);
+		buffer.putString(uri.toString());
 	}
 
 	@Override

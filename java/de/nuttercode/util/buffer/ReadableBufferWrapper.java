@@ -1,6 +1,8 @@
 package de.nuttercode.util.buffer;
 
+import java.net.URI;
 import java.nio.ByteBuffer;
+import java.time.Instant;
 
 import de.nuttercode.util.assurance.Assurance;
 import de.nuttercode.util.assurance.NotNull;
@@ -18,6 +20,14 @@ public class ReadableBufferWrapper implements ReadableBuffer {
 	public ReadableBufferWrapper(@NotNull ReadableBuffer buffer) {
 		Assurance.assureNotNull(buffer);
 		this.buffer = buffer;
+	}
+
+	public @NotNull Instant getInstant() {
+		return Instant.parse(getString());
+	}
+
+	public @NotNull URI getUri() {
+		return URI.create(getString());
 	}
 
 	@Override
@@ -63,8 +73,8 @@ public class ReadableBufferWrapper implements ReadableBuffer {
 
 	@NotNull
 	@Override
-	public byte[] getBytes(@NotNull byte[] bytes) {
-		return buffer.getBytes(bytes);
+	public byte[] getBytes(@NotNull byte[] bytes, int offset, int length) {
+		return buffer.getBytes(bytes, offset, length);
 	}
 
 	@Override

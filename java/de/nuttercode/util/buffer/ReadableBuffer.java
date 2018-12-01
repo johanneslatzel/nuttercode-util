@@ -87,7 +87,18 @@ public interface ReadableBuffer {
 	 * @return bytes
 	 */
 	@NotNull
-	byte[] getBytes(@NotNull byte[] bytes);
+	default byte[] getBytes(@NotNull byte[] bytes) {
+		return getBytes(bytes, 0, bytes.length);
+	}
+
+	/**
+	 * reads the next length bytes from the buffer starting at the offset and writes
+	 * them into bytes.
+	 * 
+	 * @return bytes
+	 */
+	@NotNull
+	byte[] getBytes(@NotNull byte[] bytes, int offset, int length);
 
 	/**
 	 * @return number of bytes that can be read from the buffer

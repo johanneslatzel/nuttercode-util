@@ -75,13 +75,11 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 			throw new IllegalStateException();
 		switch (mode) {
 		case Read:
-			Assurance.assureMode(this, BufferMode.Write);
 			this.mode = mode;
 			buffer.flip();
 			this.mode = BufferMode.Read;
 			break;
 		case Write:
-			Assurance.assureMode(this, BufferMode.Read);
 			buffer.clear();
 			this.mode = BufferMode.Write;
 			break;
@@ -255,10 +253,10 @@ public class DynamicBuffer implements WritableBuffer, ReadableBuffer {
 
 	@NotNull
 	@Override
-	public byte[] getBytes(@NotNull byte[] bytes) {
+	public byte[] getBytes(@NotNull byte[] bytes, int offset, int length) {
 		Assurance.assureNotNull(bytes);
 		Assurance.assureMode(this, BufferMode.Read);
-		buffer.get(bytes);
+		buffer.get(bytes, offset, length);
 		return bytes;
 	}
 
