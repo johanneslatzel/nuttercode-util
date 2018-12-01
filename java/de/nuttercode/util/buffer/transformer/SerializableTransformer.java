@@ -65,7 +65,7 @@ public class SerializableTransformer<T extends Serializable> implements ObjectTr
 				throw new IllegalStateException("can not create ObjectOutputStream", e);
 			}
 		try {
-			oos.writeObject(oos);
+			oos.writeObject(value);
 		} catch (IOException e) {
 			throw new RuntimeException("can not write " + value + " to the ObjectOutputStream", e);
 		}
