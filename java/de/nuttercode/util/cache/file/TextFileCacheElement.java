@@ -1,4 +1,4 @@
-package de.nuttercode.util.cache;
+package de.nuttercode.util.cache.file;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -13,12 +13,7 @@ import java.io.InputStreamReader;
  * @author Johannes B. Latzel
  *
  */
-public class TextFileCacheElement {
-
-	/**
-	 * {@link File#lastModified()} when cached
-	 */
-	private final long lastModified;
+public class TextFileCacheElement extends FileCacheElement {
 
 	/**
 	 * content of {@link File} when cached
@@ -27,7 +22,7 @@ public class TextFileCacheElement {
 
 	public TextFileCacheElement(File file, boolean ignoreNewLines, boolean trimLines)
 			throws FileNotFoundException, IOException {
-		lastModified = file.lastModified();
+		super(file);
 		StringBuilder builder = new StringBuilder();
 		String line;
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
@@ -42,20 +37,6 @@ public class TextFileCacheElement {
 		content = builder.toString();
 	}
 
-	/**
-	 * {@link File#lastModified()} when cached
-	 * 
-	 * @return {@link File#lastModified()} when cached
-	 */
-	public long getLastModified() {
-		return lastModified;
-	}
-
-	/**
-	 * content of {@link File} when cached
-	 * 
-	 * @return content of {@link File} when cached
-	 */
 	public String getContent() {
 		return content;
 	}
