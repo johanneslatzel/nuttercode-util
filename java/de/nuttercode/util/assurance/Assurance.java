@@ -17,11 +17,13 @@ public final class Assurance {
 
 	/**
 	 * @param object
+	 * @returns object
 	 * @throws IllegalArgumentException if and only if the object is null
 	 */
-	public static void assureNotNull(Object object) {
+	public static <T> T assureNotNull(T object) {
 		if (object == null)
 			throw new IllegalArgumentException("object is null");
+		return object;
 	}
 
 	/**
