@@ -11,23 +11,6 @@ import de.nuttercode.util.assurance.NotNull;
  */
 public class LongInterval implements Comparable<LongInterval> {
 
-	/**
-	 * unites two {@link LongInterval}s into one if the two intervals intersect
-	 * 
-	 * @param left
-	 * @param right
-	 * @return united {@link LongInterval} or left and right. left and right are
-	 *         contained in this interval.
-	 */
-	@NotNull
-	public LongInterval unite(@NotNull LongInterval left, @NotNull LongInterval right) {
-		Assurance.assureNotNull(left);
-		Assurance.assureNotNull(right);
-		if (!left.intersectsWith(right))
-			throw new IllegalArgumentException("left does not intersect with right");
-		return new LongInterval(Math.min(left.getBegin(), right.getBegin()), Math.max(left.getEnd(), right.getEnd()));
-	}
-
 	private final long begin;
 	private final long end;
 
@@ -45,8 +28,7 @@ public class LongInterval implements Comparable<LongInterval> {
 	 * 
 	 * @param begin
 	 * @param end
-	 * @throws IllegalArgumentException
-	 *             if begin > end
+	 * @throws IllegalArgumentException if begin > end
 	 */
 	public LongInterval(long begin, long end) {
 		Assurance.assureSmallerEquals(begin, end);
@@ -96,6 +78,28 @@ public class LongInterval implements Comparable<LongInterval> {
 		return end - begin;
 	}
 
+	public void forEach(LongAction action) {
+		for (long a = begin; a < end; a++)
+			action.apply(a);
+	}
+
+	/**
+	 * unites this {@link LongInterval} with another and returns the result. this
+	 * operation creates a completely new object which reflects the operation.
+	 * 
+	 * @param right
+	 * @return united {@link LongInterval} or left and right. left and right are
+	 *         contained in this interval.
+	 * @throws IllegalArgumentException if this and right do not intersect
+	 */
+	@NotNull
+	public LongInterval unite(@NotNull LongInterval right) {
+		Assurance.assureNotNull(right);
+		if (!intersectsWith(right))
+			throw new IllegalArgumentException(this + " does not intersect with " + right);
+		return new LongInterval(Math.min(getBegin(), right.getBegin()), Math.max(getEnd(), right.getEnd()));
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -130,6 +134,10 @@ public class LongInterval implements Comparable<LongInterval> {
 	public int compareTo(@NotNull LongInterval o) {
 		Assurance.assureNotNull(o);
 		return Long.compare(getLength(), o.getLength());
+	}
+
+	public interface LongAction {
+		void apply(long value);
 	}
 
 }
