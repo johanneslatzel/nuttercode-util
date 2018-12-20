@@ -30,15 +30,14 @@ public final class Stopwatch {
 	 */
 	public void start() {
 		elapsedNanos = 0;
-		isStarted = true;
 		resume();
+		isStarted = true;
 	}
 
 	/**
 	 * resumes this stopwatch
 	 * 
-	 * @throws IllegalStateException
-	 *             if the stopwatch has already been started
+	 * @throws IllegalStateException if the stopwatch has already been started
 	 */
 	public void resume() {
 		if (isStarted)
@@ -64,6 +63,12 @@ public final class Stopwatch {
 	 */
 	public long getElapsedNanos() {
 		return elapsedNanos;
+	}
+
+	@Override
+	public String toString() {
+		return "Stopwatch [startNanos=" + startNanos + ", endNanos=" + endNanos + ", elapsedNanos=" + elapsedNanos
+				+ ", isStarted=" + isStarted + "]";
 	}
 
 }
