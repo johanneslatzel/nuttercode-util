@@ -17,8 +17,7 @@ public final class Assurance {
 
 	/**
 	 * @param object
-	 * @throws IllegalArgumentException
-	 *             if and only if the object is null
+	 * @throws IllegalArgumentException if and only if the object is null
 	 */
 	public static void assureNotNull(Object object) {
 		if (object == null)
@@ -27,8 +26,8 @@ public final class Assurance {
 
 	/**
 	 * @param s
-	 * @throws IllegalArgumentException
-	 *             if and only if the object is null or the {@link String} is empty
+	 * @throws IllegalArgumentException if and only if the object is null or the
+	 *                                  {@link String} is empty
 	 */
 	public static void assureNotEmpty(String s) {
 		if (s == null || s.isEmpty())
@@ -37,8 +36,7 @@ public final class Assurance {
 
 	/**
 	 * @param i
-	 * @throws IllegalArgumentException
-	 *             if and only if the argument is not positive
+	 * @throws IllegalArgumentException if and only if the argument is not positive
 	 */
 	public static void assurePositive(long i) {
 		if (i <= 0)
@@ -47,8 +45,7 @@ public final class Assurance {
 
 	/**
 	 * @param i
-	 * @throws IllegalArgumentException
-	 *             if and only if the argument is negative
+	 * @throws IllegalArgumentException if and only if the argument is negative
 	 */
 	public static void assureNotNegative(long i) {
 		if (i < 0)
@@ -57,8 +54,7 @@ public final class Assurance {
 
 	/**
 	 * @param i
-	 * @throws IllegalArgumentException
-	 *             if and only if the argument is negative
+	 * @throws IllegalArgumentException if and only if the argument is negative
 	 */
 	public static void assureNotNegative(double i) {
 		if (i < 0)
@@ -67,8 +63,7 @@ public final class Assurance {
 
 	/**
 	 * @param i
-	 * @throws IllegalArgumentException
-	 *             if and only if the argument is not positive
+	 * @throws IllegalArgumentException if and only if the argument is not positive
 	 */
 	public static void assurePositive(double i) {
 		if (i <= 0)
@@ -79,8 +74,8 @@ public final class Assurance {
 	 * @param value
 	 * @param leftBoundary
 	 * @param rightBoundary
-	 * @throws IllegalArugmentException
-	 *             if score is not element of [leftBoundary, rightBoundary]
+	 * @throws IllegalArugmentException if score is not element of [leftBoundary,
+	 *                                  rightBoundary]
 	 */
 	public static void assureBoundaries(double value, double leftBoundary, double rightBoundary) {
 		if (value < leftBoundary || value > rightBoundary)
@@ -91,8 +86,8 @@ public final class Assurance {
 	 * @param value
 	 * @param leftBoundary
 	 * @param rightBoundary
-	 * @throws IllegalArugmentException
-	 *             if score is not element of [leftBoundary, rightBoundary]
+	 * @throws IllegalArugmentException if score is not element of [leftBoundary,
+	 *                                  rightBoundary]
 	 */
 	public static void assureBoundaries(long value, long leftBoundary, long rightBoundary) {
 		if (value < leftBoundary || value > rightBoundary)
@@ -103,10 +98,8 @@ public final class Assurance {
 	 * 
 	 * @param buffer
 	 * @param mode
-	 * @throws IllegalArgumentException
-	 *             if buffer or mode is null
-	 * @throws IllegalStateException
-	 *             if buffer.getMode() is not equal to mode
+	 * @throws IllegalArgumentException if buffer or mode is null
+	 * @throws IllegalStateException    if buffer.getMode() is not equal to mode
 	 */
 	public static void assureMode(DynamicBuffer buffer, BufferMode mode) {
 		assureNotNull(buffer);
@@ -117,10 +110,9 @@ public final class Assurance {
 
 	/**
 	 * @param closeable
-	 * @throws IllegalArgumentException
-	 *             if closeable is null
-	 * @throws {@link
-	 *             IllegalStateException} if closeable is closed
+	 * @throws IllegalArgumentException if closeable is null
+	 * @throws                          {@link IllegalStateException} if closeable
+	 *                                  is closed
 	 */
 	public static void assureNotClosed(Closeable closeable) {
 		Assurance.assureNotNull(closeable);
@@ -130,10 +122,9 @@ public final class Assurance {
 
 	/**
 	 * @param initializable
-	 * @throws IllegalArgumentException
-	 *             if initializable is null
-	 * @throws {@link
-	 *             IllegalStateException} if initializable is not initialized
+	 * @throws IllegalArgumentException if initializable is null
+	 * @throws                          {@link IllegalStateException} if
+	 *                                  initializable is not initialized
 	 */
 	public static void assureInitialized(Initializable initializable) {
 		Assurance.assureNotNull(initializable);
@@ -143,10 +134,9 @@ public final class Assurance {
 
 	/**
 	 * @param initializable
-	 * @throws IllegalArgumentException
-	 *             if initializable is null
-	 * @throws {@link
-	 *             IllegalStateException} if initializable is initialized
+	 * @throws IllegalArgumentException if initializable is null
+	 * @throws                          {@link IllegalStateException} if
+	 *                                  initializable is initialized
 	 */
 	public static void assureNotInitialized(Initializable initializable) {
 		Assurance.assureNotNull(initializable);
@@ -156,12 +146,9 @@ public final class Assurance {
 
 	/**
 	 * 
-	 * @param marker
-	 *            some point in time against which instant will be measured
-	 * @param instant
-	 *            some instant
-	 * @throws IllegalArgumentException
-	 *             when marker is after instant
+	 * @param marker  some point in time against which instant will be measured
+	 * @param instant some instant
+	 * @throws IllegalArgumentException when marker is after instant
 	 */
 	public static void assureInstantIsNotBefore(Instant marker, Instant instant) {
 		if (marker.isAfter(instant))
@@ -172,8 +159,7 @@ public final class Assurance {
 	 * 
 	 * @param begin
 	 * @param end
-	 * @throws IllegalArgumentException
-	 *             if begin > end
+	 * @throws IllegalArgumentException if begin > end
 	 */
 	public static void assureSmallerEquals(long begin, long end) {
 		if (begin > end)
@@ -184,12 +170,33 @@ public final class Assurance {
 	 * 
 	 * @param begin
 	 * @param end
-	 * @throws IllegalArgumentException
-	 *             if begin > end
+	 * @throws IllegalArgumentException if begin > end
 	 */
 	public static void assureSmallerEquals(double begin, double end) {
 		if (begin > end)
 			throw new IllegalArgumentException(begin + " > " + end);
+	}
+
+	/**
+	 * 
+	 * @param scalar
+	 * @param i
+	 * @throws IllegalArgumentException if and only if scalar == i
+	 */
+	public static void assureNotEqual(double scalar, double i) {
+		if (scalar == i)
+			throw new IllegalArgumentException();
+	}
+
+	/**
+	 * 
+	 * @param scalar
+	 * @param i
+	 * @throws IllegalArgumentException if and only if scalar == i
+	 */
+	public static void assureNotEqual(long scalar, long i) {
+		if (scalar == i)
+			throw new IllegalArgumentException();
 	}
 
 }
