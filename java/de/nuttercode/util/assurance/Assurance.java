@@ -191,13 +191,21 @@ public final class Assurance {
 	}
 
 	/**
-	 * 
 	 * @param scalar
 	 * @param i
 	 * @throws IllegalArgumentException if and only if scalar == i
 	 */
 	public static void assureNotEqual(long scalar, long i) {
 		if (scalar == i)
+			throw new IllegalArgumentException();
+	}
+
+	/**
+	 * @param array
+	 * @throws IllegalArgumentException if array is null or if array.length == 0
+	 */
+	public static void assureNotEmpty(double[] array) {
+		if (Assurance.assureNotNull(array).length == 0)
 			throw new IllegalArgumentException();
 	}
 
