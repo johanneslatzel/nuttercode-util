@@ -9,22 +9,22 @@ package de.nuttercode.util;
 public class Range {
 
 	/**
-	 * creates a new {@link LongInteval#LongInteval(long, long)} with begin <= end
+	 * creates a new {@link LongInteval#LongInteval(long, long)} [begin, end[
 	 * 
 	 * @param begin
 	 * @param end
-	 * @return new {@link LongInteval#LongInteval(long, long)} with begin <= end
+	 * @return new {@link LongInteval#LongInteval(long, long)} [begin, end[
 	 */
 	public static LongInterval of(long begin, long end) {
 		return new LongInterval(begin, end);
 	}
 
 	/**
-	 * creates a new {@link IntInterval#IntInterval(int, int)} with begin <= end.
+	 * creates a new {@link IntInterval#IntInterval(int, int)} [begin, end[
 	 * 
 	 * @param begin
 	 * @param end
-	 * @return new {@link IntInterval#IntInterval(int, int)} with begin <= end
+	 * @return new {@link IntInterval#IntInterval(int, int)} [begin, end[
 	 */
 	public static IntInterval of(int begin, int end) {
 		return new IntInterval(begin, end);
