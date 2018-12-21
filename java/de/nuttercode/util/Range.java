@@ -1,10 +1,5 @@
 package de.nuttercode.util;
 
-import java.util.Arrays;
-
-import de.nuttercode.util.assurance.Assurance;
-import de.nuttercode.util.assurance.NotNull;
-
 /**
  * utility-class for Ranges, like {@link LongInterval} and {@link IntInterval}
  * 
