@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.function.Function;
 
 /**
  * an element in a {@link TextFileCache}
@@ -20,11 +21,12 @@ public class TextFileCacheElement extends FileCacheElement {
 	 */
 	private final String content;
 
-	public TextFileCacheElement(File file, boolean ignoreNewLines, boolean trimLines)
-			throws FileNotFoundException, IOException {
+	public TextFileCacheElement(File file, boolean ignoreNewLines, boolean trimLines,
+			Function<String, String> textManipulator) throws FileNotFoundException, IOException {
 		super(file);
 		StringBuilder builder = new StringBuilder();
 		String line;
+		String content;
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
 			while ((line = reader.readLine()) != null) {
 				if (trimLines)
@@ -35,6 +37,9 @@ public class TextFileCacheElement extends FileCacheElement {
 			}
 		}
 		content = builder.toString();
+		if (textManipulator != null)
+			content = textManipulator.apply(content);
+		this.content = content;
 	}
 
 	public String getContent() {

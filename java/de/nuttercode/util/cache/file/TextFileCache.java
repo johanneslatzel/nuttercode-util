@@ -3,6 +3,7 @@ package de.nuttercode.util.cache.file;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.function.Function;
 
 import de.nuttercode.util.cache.WeakCache;
 
@@ -20,11 +21,13 @@ public class TextFileCache extends FileCache<TextFileCacheElement> {
 
 	private boolean ignoreNewLines;
 	private boolean trimLines;
+	private Function<String, String> textManipulator;
 
 	public TextFileCache() {
 		super();
 		setIgnoreNewLines(false);
 		setTrimLines(false);
+		setTextManipulator(null);
 	}
 
 	public boolean isIgnoreNewLines() {
@@ -33,6 +36,10 @@ public class TextFileCache extends FileCache<TextFileCacheElement> {
 
 	public boolean isTrimLines() {
 		return trimLines;
+	}
+
+	public void setTextManipulator(Function<String, String> textManipulator) {
+		this.textManipulator = textManipulator;
 	}
 
 	public void setIgnoreNewLines(boolean ignoreNewLines) {
@@ -45,7 +52,7 @@ public class TextFileCache extends FileCache<TextFileCacheElement> {
 
 	@Override
 	protected TextFileCacheElement createFileCacheElement(File file) throws FileNotFoundException, IOException {
-		return new TextFileCacheElement(file, ignoreNewLines, trimLines);
+		return new TextFileCacheElement(file, ignoreNewLines, trimLines, textManipulator);
 	}
 
 }
