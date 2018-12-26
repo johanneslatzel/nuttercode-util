@@ -49,6 +49,21 @@ public class ArrayUtil {
 	}
 
 	/**
+	 * copies source into destination. destination must be at least as long and wide
+	 * as source.
+	 * 
+	 * @param source
+	 * @param destination
+	 */
+	public static <T> void copy(T[][] source, T[][] destination) {
+		for (int a = 0; a < source.length; a++) {
+			for (int b = 0; b < source[a].length; b++) {
+				destination[a][b] = source[a][b];
+			}
+		}
+	}
+
+	/**
 	 * creates an T[size] and initializes every element with constructor. hint needs
 	 * to be some
 	 * 
