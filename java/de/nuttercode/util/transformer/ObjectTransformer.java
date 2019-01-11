@@ -1,4 +1,4 @@
-package de.nuttercode.util.buffer.transformer;
+package de.nuttercode.util.transformer;
 
 import de.nuttercode.util.assurance.NotNull;
 import de.nuttercode.util.buffer.ReadableBuffer;

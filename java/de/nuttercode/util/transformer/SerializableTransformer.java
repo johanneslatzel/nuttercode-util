@@ -1,4 +1,4 @@
-package de.nuttercode.util.buffer.transformer;
+package de.nuttercode.util.transformer;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -21,16 +21,6 @@ import de.nuttercode.util.buffer.WritableBuffer;
 public class SerializableTransformer<T extends Serializable> implements ObjectTransformer<T>, Closeable {
 
 	/**
-	 * wraps around {@link #bos}
-	 */
-	private ObjectOutputStream oos;
-
-	/**
-	 * wraps around {@link #bis}
-	 */
-	private ObjectInputStream ois;
-
-	/**
 	 * wraps around the {@link ReadableBuffer} given by
 	 * {@link #getFrom(ReadableBuffer)}
 	 */
@@ -46,8 +36,6 @@ public class SerializableTransformer<T extends Serializable> implements ObjectTr
 	 * creates new instance
 	 */
 	public SerializableTransformer() {
-		oos = null;
-		ois = null;
 		bis = null;
 		bos = null;
 	}
@@ -58,14 +46,9 @@ public class SerializableTransformer<T extends Serializable> implements ObjectTr
 			bos = new BufferOutputStream(writableBuffer);
 		else
 			bos.setBuffer(writableBuffer);
-		if (oos == null)
-			try {
-				oos = new ObjectOutputStream(bos);
-			} catch (IOException e) {
-				throw new IllegalStateException("can not create ObjectOutputStream", e);
-			}
-		try {
+		try (ObjectOutputStream oos = new ObjectOutputStream(bos)) {
 			oos.writeObject(value);
+			oos.flush();
 		} catch (IOException e) {
 			throw new RuntimeException("can not write " + value + " to the ObjectOutputStream", e);
 		}
@@ -78,13 +61,7 @@ public class SerializableTransformer<T extends Serializable> implements ObjectTr
 			bis = new BufferInputStream(readableBuffer);
 		else
 			bis.setBuffer(readableBuffer);
-		if (ois == null)
-			try {
-				ois = new ObjectInputStream(bis);
-			} catch (IOException e) {
-				throw new IllegalStateException("can not create ObjectInputStream", e);
-			}
-		try {
+		try (ObjectInputStream ois = new ObjectInputStream(bis)) {
 			return (T) ois.readObject();
 		} catch (IOException e) {
 			throw new RuntimeException("can not read the next object from the ObjectInputStream", e);
@@ -95,9 +72,8 @@ public class SerializableTransformer<T extends Serializable> implements ObjectTr
 
 	@Override
 	public void close() throws IOException {
-		oos.flush();
-		oos.close();
-		ois.close();
+		bos.close();
+		bis.close();
 	}
 
 }
