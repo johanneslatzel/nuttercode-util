@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import de.nuttercode.util.assurance.Assurance;
 import de.nuttercode.util.assurance.NotNull;
-import de.nuttercode.util.buffer.transformer.ObjectTransformer;
+import de.nuttercode.util.transformer.ObjectTransformer;
 
 /**
  * represents a writeable buffer

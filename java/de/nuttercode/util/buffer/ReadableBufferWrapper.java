@@ -78,8 +78,8 @@ public class ReadableBufferWrapper implements ReadableBuffer {
 	}
 
 	@Override
-	public int transferableData() {
-		return buffer.transferableData();
+	public int available() {
+		return buffer.available();
 	}
 
 	@NotNull

@@ -5,7 +5,8 @@ import java.util.Collection;
 
 import de.nuttercode.util.assurance.Assurance;
 import de.nuttercode.util.assurance.NotNull;
-import de.nuttercode.util.buffer.transformer.ObjectTransformer;
+import de.nuttercode.util.assurance.Positive;
+import de.nuttercode.util.transformer.ObjectTransformer;
 
 /**
  * represents a readable buffer
@@ -98,18 +99,18 @@ public interface ReadableBuffer {
 	 * @return bytes
 	 */
 	@NotNull
-	byte[] getBytes(@NotNull byte[] bytes, int offset, int length);
+	byte[] getBytes(@NotNull byte[] bytes, int offset, @Positive int length);
 
 	/**
 	 * @return number of bytes that can be read from the buffer
 	 */
-	int transferableData();
+	int available();
 
 	/**
-	 * @return true if {@link #transferableData()} > 0
+	 * @return true if {@link #available()} > 0
 	 */
-	default boolean hasTransferableData() {
-		return transferableData() > 0;
+	default boolean hasAvailable() {
+		return available() > 0;
 	}
 
 	/**
