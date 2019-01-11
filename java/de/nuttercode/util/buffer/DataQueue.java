@@ -266,7 +266,7 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	public byte[] getBytes(@NotNull byte[] bytes, int offset, @Positive int length) {
 		Assurance.assureNotNull(bytes);
 		assureHasEnoughData(length);
-		ArrayUtil.getBytes(bytes, data, offset, length);
+		ArrayUtil.putBytes(bytes, data, readPosition, length, offset);
 		increaseRead(length);
 		return bytes;
 	}
