@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.util.Collection;
 
 import de.nuttercode.util.Initializable;
-import de.nuttercode.util.buffer.DataQueue;
 
 /**
  * provides parameter checks and throws IllegalArgumentException if appropriate
