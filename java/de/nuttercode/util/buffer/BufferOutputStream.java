@@ -44,7 +44,7 @@ public class BufferOutputStream extends OutputStream {
 	@Override
 	public void write(int b) throws IOException {
 		try {
-			buffer.putByte((byte) b);
+			buffer.putByte((byte) (b & 0xff));
 		} catch (RuntimeException e) {
 			throw new IOException("can not write to the buffer", e);
 		}
