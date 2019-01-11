@@ -1,11 +1,10 @@
 package de.nuttercode.util.assurance;
 
 import java.time.Instant;
+import java.util.Collection;
 
-import de.nuttercode.util.Closeable;
 import de.nuttercode.util.Initializable;
-import de.nuttercode.util.buffer.BufferMode;
-import de.nuttercode.util.buffer.DynamicBuffer;
+import de.nuttercode.util.buffer.DataQueue;
 
 /**
  * provides parameter checks and throws IllegalArgumentException if appropriate
@@ -81,7 +80,8 @@ public final class Assurance {
 	 */
 	public static void assureBoundaries(double value, double leftBoundary, double rightBoundary) {
 		if (value < leftBoundary || value > rightBoundary)
-			throw new IllegalArgumentException("score is not element of [" + leftBoundary + ", " + rightBoundary + "]");
+			throw new IllegalArgumentException(
+					"value " + value + " is not element of [" + leftBoundary + ", " + rightBoundary + "]");
 	}
 
 	/**
@@ -93,33 +93,8 @@ public final class Assurance {
 	 */
 	public static void assureBoundaries(long value, long leftBoundary, long rightBoundary) {
 		if (value < leftBoundary || value > rightBoundary)
-			throw new IllegalArgumentException("value is not element of [" + leftBoundary + ", " + rightBoundary + "]");
-	}
-
-	/**
-	 * 
-	 * @param buffer
-	 * @param mode
-	 * @throws IllegalArgumentException if buffer or mode is null
-	 * @throws IllegalStateException    if buffer.getMode() is not equal to mode
-	 */
-	public static void assureMode(DynamicBuffer buffer, BufferMode mode) {
-		assureNotNull(buffer);
-		assureNotNull(mode);
-		if (!buffer.getMode().equals(mode))
-			throw new IllegalStateException("the mode of the buffer is " + buffer.getMode() + " but should be " + mode);
-	}
-
-	/**
-	 * @param closeable
-	 * @throws IllegalArgumentException if closeable is null
-	 * @throws                          {@link IllegalStateException} if closeable
-	 *                                  is closed
-	 */
-	public static void assureNotClosed(Closeable closeable) {
-		Assurance.assureNotNull(closeable);
-		if (closeable.isClosed())
-			throw new IllegalStateException("the closeable " + closeable + " is closed");
+			throw new IllegalArgumentException(
+					"value " + value + " is not element of [" + leftBoundary + ", " + rightBoundary + "]");
 	}
 
 	/**
@@ -207,6 +182,24 @@ public final class Assurance {
 	public static void assureNotEmpty(double[] array) {
 		if (Assurance.assureNotNull(array).length == 0)
 			throw new IllegalArgumentException();
+	}
+
+	/**
+	 * @param collection
+	 * @throws IllegalArgumentException if collection is null or empty
+	 */
+	public static <T> void assureNotEmpty(Collection<T> collection) {
+		if (Assurance.assureNotNull(collection).isEmpty())
+			throw new IllegalArgumentException("list is empty");
+	}
+
+	/**
+	 * @param value
+	 * @param equalValue
+	 * @throws IllegalArgumentException if and only if value != equalValue
+	 */
+	public static void assureEquals(int value, int equalValue) {
+		Assurance.assureBoundaries(value, equalValue, equalValue);
 	}
 
 }
