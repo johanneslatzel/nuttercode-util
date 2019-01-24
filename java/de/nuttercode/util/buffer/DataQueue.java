@@ -45,7 +45,7 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	 */
 	public DataQueue(int initialCapacity) {
 		data = new byte[initialCapacity];
-		readPosition = writePosition = 0;
+		clear();
 	}
 
 	/**
@@ -57,12 +57,13 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 		if (free() >= additionalCapacity)
 			return;
 		int newCapacity = (capacity() * 3) / 2 + additionalCapacity;
+		int available = available();
 		if (newCapacity < 0)
 			throw new IllegalStateException("too much data");
 		byte[] newData = new byte[newCapacity];
-		getBytes(newData, 0, writePosition);
-		increaseWrite(-readPosition);
-		increaseRead(-readPosition);
+		getBytes(newData, 0, available);
+		readPosition = 0;
+		writePosition = available;
 		data = newData;
 	}
 
@@ -181,7 +182,7 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	public void putChar(char c) {
 		assureCapacity(Character.BYTES);
 		ArrayUtil.putChar(data, c, writePosition);
-		increaseWrite(writePosition);
+		increaseWrite(Character.BYTES);
 	}
 
 	@Override
@@ -249,7 +250,7 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	public void putBytes(@NotNull byte[] bytes, int offset, int length) {
 		Assurance.assureNotNull(bytes);
 		assureCapacity(length);
-		ArrayUtil.putBytes(data, bytes, offset, length);
+		ArrayUtil.putBytes(data, bytes, offset, length, writePosition);
 		increaseWrite(length);
 	}
 
@@ -287,6 +288,17 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 		assureCapacity(length);
 		someBuffer.getBytes(data, writePosition, length);
 		increaseWrite(length);
+	}
+
+	@Override
+	public void clear() {
+		readPosition = writePosition = 0;
+	}
+
+	@Override
+	public String toString() {
+		return "DataQueue [readPosition=" + readPosition + ", writePosition=" + writePosition + ", capacity()="
+				+ capacity() + ", free()=" + free() + ", available()=" + available() + "]";
 	}
 
 }
