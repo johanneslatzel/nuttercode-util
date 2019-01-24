@@ -87,4 +87,9 @@ public class WritableBufferWrapper implements WritableBuffer {
 		buffer.putBuffer(someBuffer);
 	}
 
+	@Override
+	public void clear() {
+		buffer.clear();
+	}
+
 }
