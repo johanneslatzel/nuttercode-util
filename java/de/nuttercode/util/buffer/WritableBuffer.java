@@ -1,11 +1,8 @@
 package de.nuttercode.util.buffer;
 
 import java.nio.ByteBuffer;
-import java.util.Collection;
 
-import de.nuttercode.util.assurance.Assurance;
 import de.nuttercode.util.assurance.NotNull;
-import de.nuttercode.util.transformer.ObjectTransformer;
 
 /**
  * represents a writeable buffer
@@ -112,6 +109,11 @@ public interface WritableBuffer {
 	void putBuffer(ReadableBuffer readableBuffer);
 
 	/**
+	 * clears the content of this buffer
+	 */
+	void clear();
+
+	/**
 	 * creates a writable view of this buffer
 	 * 
 	 * @return a writable view of this buffer
@@ -119,22 +121,6 @@ public interface WritableBuffer {
 	@NotNull
 	default WritableBuffer writableView() {
 		return new WritableBufferWrapper(this);
-	}
-
-	/**
-	 * puts the next n elements from the collection and puts them into this buffer.
-	 * n is set by a call to {@link Collection#size()} and put into this buffer by
-	 * {@link #putInt(int) putInt(collection.size())}.
-	 * 
-	 * @param transformer
-	 * @param collection
-	 */
-	default <T> void putCollection(@NotNull ObjectTransformer<T> transformer, @NotNull Collection<T> collection) {
-		Assurance.assureNotNull(transformer);
-		Assurance.assureNotNull(collection);
-		putInt(collection.size());
-		for (T t : collection)
-			transformer.putInto(t, this);
 	}
 
 }
