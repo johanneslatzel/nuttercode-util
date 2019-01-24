@@ -179,7 +179,7 @@ public class ArrayUtil {
 	 * @return
 	 */
 	public static char getChar(byte[] data, int position) {
-		return (char) (data[position] << 8 | data[position + 1]);
+		return (char) getShort(data, position);
 	}
 
 	/**
@@ -190,7 +190,8 @@ public class ArrayUtil {
 	 * @return
 	 */
 	public static short getShort(byte[] data, int position) {
-		return (short) (data[position] << 8 | data[position + 1]);
+		return (short) (Byte.toUnsignedInt(data[position]) << Byte.BYTES * 8
+				| Byte.toUnsignedInt(data[position + Byte.BYTES]));
 	}
 
 	/**
@@ -201,7 +202,8 @@ public class ArrayUtil {
 	 * @return
 	 */
 	public static int getInt(byte[] data, int position) {
-		return (int) getShort(data, position) << 16 | getShort(data, position);
+		return Short.toUnsignedInt(getShort(data, position)) << Short.BYTES * 8
+				| Short.toUnsignedInt(getShort(data, position + Short.BYTES));
 	}
 
 	/**
@@ -212,7 +214,8 @@ public class ArrayUtil {
 	 * @return
 	 */
 	public static long getLong(byte[] data, int position) {
-		return (long) getInt(data, position) << 32 | getInt(data, position + Integer.BYTES);
+		return Integer.toUnsignedLong(getInt(data, position)) << Integer.BYTES * 8
+				| Integer.toUnsignedLong(getInt(data, position + Integer.BYTES));
 	}
 
 	/**
