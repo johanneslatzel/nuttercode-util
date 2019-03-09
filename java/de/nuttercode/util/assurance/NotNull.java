@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 /**
  * annotated methods guarantee to never return null. annotated fields are
  * guaranteed to never be null. annotated parameters must never be null or an
- * IllegalArgumentException will be thrown.
+ * {@link NullPointerException} will be thrown.
  * 
  * @author Johannes B. Latzel
  *

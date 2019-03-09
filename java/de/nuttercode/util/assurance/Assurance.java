@@ -6,7 +6,8 @@ import java.util.Collection;
 import de.nuttercode.util.Initializable;
 
 /**
- * provides parameter checks and throws IllegalArgumentException if appropriate
+ * provides parameter checks and throws IllegalArgumentException or
+ * NullPointerException if appropriate
  * 
  * @author Johannes B. Latzel
  *
@@ -16,11 +17,11 @@ public final class Assurance {
 	/**
 	 * @param object
 	 * @returns object
-	 * @throws IllegalArgumentException if and only if the object is null
+	 * @throws NullPointerException if and only if the object is null
 	 */
 	public static <T> T assureNotNull(T object) {
 		if (object == null)
-			throw new IllegalArgumentException("object is null");
+			throw new NullPointerException("object is null");
 		return object;
 	}
 
