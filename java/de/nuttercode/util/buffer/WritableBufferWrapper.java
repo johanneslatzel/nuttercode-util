@@ -1,5 +1,7 @@
 package de.nuttercode.util.buffer;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.nio.ByteBuffer;
 import java.time.Instant;
@@ -90,6 +92,11 @@ public class WritableBufferWrapper implements WritableBuffer {
 	@Override
 	public void clear() {
 		buffer.clear();
+	}
+
+	@Override
+	public void fillWithStream(InputStream inputStream) throws IOException {
+		buffer.fillWithStream(inputStream);
 	}
 
 }

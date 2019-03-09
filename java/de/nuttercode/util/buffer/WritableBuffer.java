@@ -1,5 +1,7 @@
 package de.nuttercode.util.buffer;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 
 import de.nuttercode.util.assurance.NotNull;
@@ -122,5 +124,14 @@ public interface WritableBuffer {
 	default WritableBuffer writableView() {
 		return new WritableBufferWrapper(this);
 	}
+
+	/**
+	 * reads all bytes from the stream until end of stream and stores them in this
+	 * buffer
+	 * 
+	 * @param inputStream
+	 * @throws IOException
+	 */
+	void fillWithStream(@NotNull InputStream inputStream) throws IOException;
 
 }

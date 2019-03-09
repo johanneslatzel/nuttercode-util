@@ -1,5 +1,7 @@
 package de.nuttercode.util.buffer;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URI;
 import java.nio.ByteBuffer;
 import java.time.Instant;
@@ -86,6 +88,11 @@ public class ReadableBufferWrapper implements ReadableBuffer {
 	@Override
 	public ByteBuffer transferDataInto(@NotNull ByteBuffer outerBuffer) {
 		return buffer.transferDataInto(outerBuffer);
+	}
+
+	@Override
+	public void flushToStream(@NotNull OutputStream outputStream) throws IOException {
+		buffer.flushToStream(outputStream);
 	}
 
 }

@@ -1,5 +1,7 @@
 package de.nuttercode.util.buffer;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
 import de.nuttercode.util.assurance.NotNull;
@@ -127,5 +129,13 @@ public interface ReadableBuffer {
 	default ReadableBuffer readableView() {
 		return new ReadableBufferWrapper(this);
 	}
+
+	/**
+	 * flushes all bytes from this buffer to the outputStream
+	 * 
+	 * @param stream
+	 * @throws IOException
+	 */
+	void flushToStream(@NotNull OutputStream outputStream) throws IOException;
 
 }

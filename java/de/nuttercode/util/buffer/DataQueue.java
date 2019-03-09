@@ -1,5 +1,9 @@
 package de.nuttercode.util.buffer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
 import de.nuttercode.util.ArrayUtil;
@@ -16,6 +20,8 @@ import de.nuttercode.util.assurance.Positive;
  *
  */
 public class DataQueue implements WritableBuffer, ReadableBuffer {
+
+	private final static String CHARSET = "UTF-8";
 
 	private byte[] data;
 
@@ -173,7 +179,12 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	@Override
 	public void putString(@NotNull String s) {
 		Assurance.assureNotNull(s);
-		byte[] bytes = s.getBytes();
+		byte[] bytes;
+		try {
+			bytes = s.getBytes(CHARSET);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
 		putInt(bytes.length);
 		putBytes(bytes);
 	}
@@ -220,7 +231,11 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	@NotNull
 	@Override
 	public String getString() {
-		return new String(getBytes(new byte[getInt()]));
+		try {
+			return new String(getBytes(new byte[getInt()]), CHARSET);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -299,6 +314,25 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	public String toString() {
 		return "DataQueue [readPosition=" + readPosition + ", writePosition=" + writePosition + ", capacity()="
 				+ capacity() + ", free()=" + free() + ", available()=" + available() + "]";
+	}
+
+	@Override
+	public void flushToStream(@NotNull OutputStream outputStream) throws IOException {
+		Assurance.assureNotNull(outputStream);
+		outputStream.write(data, readPosition, available());
+		outputStream.flush();
+		clear();
+	}
+
+	@Override
+	public void fillWithStream(@NotNull InputStream inputStream) throws IOException {
+		Assurance.assureNotNull(inputStream);
+		int bytesRead;
+		do {
+			bytesRead = inputStream.read(data, writePosition, Math.max(inputStream.available(), 1));
+			if (bytesRead > 0)
+				increaseWrite(bytesRead);
+		} while (bytesRead >= 0);
 	}
 
 }
