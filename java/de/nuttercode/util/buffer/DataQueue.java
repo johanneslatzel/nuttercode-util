@@ -328,8 +328,11 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	public void fillWithStream(@NotNull InputStream inputStream) throws IOException {
 		Assurance.assureNotNull(inputStream);
 		int bytesRead;
+		int bytesAvailable;
 		do {
-			bytesRead = inputStream.read(data, writePosition, Math.max(inputStream.available(), 1));
+			bytesAvailable = Math.max(inputStream.available(), 1);
+			assureCapacity(bytesAvailable);
+			bytesRead = inputStream.read(data, writePosition, bytesAvailable);
 			if (bytesRead > 0)
 				increaseWrite(bytesRead);
 		} while (bytesRead >= 0);
