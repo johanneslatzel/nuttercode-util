@@ -338,4 +338,13 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 		} while (bytesRead >= 0);
 	}
 
+	@Override
+	public void retain(int length) {
+		Assurance.assureBoundaries(length, 0, Integer.MAX_VALUE);
+		int available = available();
+		if (available > length) {
+			increaseWrite(length - available);
+		}
+	}
+
 }

@@ -95,4 +95,9 @@ public class ReadableBufferWrapper implements ReadableBuffer {
 		buffer.flushToStream(outputStream);
 	}
 
+	@Override
+	public void retain(int length) {
+		buffer.retain(length);
+	}
+
 }

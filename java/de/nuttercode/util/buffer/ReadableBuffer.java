@@ -138,4 +138,12 @@ public interface ReadableBuffer {
 	 */
 	void flushToStream(@NotNull OutputStream outputStream) throws IOException;
 
+	/**
+	 * retains the first length bytes and discards the remaining bytes
+	 * 
+	 * @param length number of bytes
+	 * @throws IllegalArgumentException if length < 0
+	 */
+	void retain(int length);
+
 }
