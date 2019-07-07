@@ -104,8 +104,8 @@ public final class Assurance {
 	/**
 	 * @param initializable
 	 * @throws IllegalArgumentException if initializable is null
-	 * @throws                          {@link IllegalStateException} if
-	 *                                  initializable is not initialized
+	 * @throws {@link                   IllegalStateException} if initializable is
+	 *                                  not initialized
 	 */
 	public static void assureInitialized(Initializable initializable) {
 		Assurance.assureNotNull(initializable);
@@ -116,8 +116,8 @@ public final class Assurance {
 	/**
 	 * @param initializable
 	 * @throws IllegalArgumentException if initializable is null
-	 * @throws                          {@link IllegalStateException} if
-	 *                                  initializable is initialized
+	 * @throws {@link                   IllegalStateException} if initializable is
+	 *                                  initialized
 	 */
 	public static void assureNotInitialized(Initializable initializable) {
 		Assurance.assureNotNull(initializable);
@@ -204,6 +204,16 @@ public final class Assurance {
 	 */
 	public static void assureEquals(int value, int equalValue) {
 		Assurance.assureBoundaries(value, equalValue, equalValue);
+	}
+
+	/**
+	 * @param s1
+	 * @param s2
+	 * @throws IllegalArgumentException if s1 equals s2
+	 */
+	public static void assureNotEqual(String s1, String s2) {
+		if ((s1 == s2) || (s1 != null && s1.equals(s2)))
+			throw new IllegalArgumentException(s1 + " equals " + s2);
 	}
 
 }
