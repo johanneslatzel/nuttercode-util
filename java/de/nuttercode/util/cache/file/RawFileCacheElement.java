@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 /**
  * implementation of {@link FileCacheElement} for binary file caching
@@ -45,6 +46,13 @@ public class RawFileCacheElement extends FileCacheElement {
 	 */
 	public void writeTo(OutputStream out) throws IOException {
 		out.write(content);
+	}
+
+	/**
+	 * @return copy of the backing byte[] of the content of the file
+	 */
+	public byte[] getContent() {
+		return Arrays.copyOf(content, content.length);
 	}
 
 }
