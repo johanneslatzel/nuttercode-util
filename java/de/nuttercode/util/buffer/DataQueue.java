@@ -38,6 +38,12 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	private int writePosition;
 
 	/**
+	 * sets the maximum size of the internal buffer used in this data structure. if
+	 * maxSize <= 0 then the size is unlimited.
+	 */
+	private int maxSize;
+
+	/**
 	 * DataQueue with initialCapacity of 0
 	 */
 	public DataQueue() {
@@ -51,6 +57,7 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	 */
 	public DataQueue(int initialCapacity) {
 		data = new byte[initialCapacity];
+		maxSize = Integer.MAX_VALUE;
 		clear();
 	}
 
@@ -58,15 +65,22 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	 * assures that at least additionalCapacity is available in the buffer
 	 * 
 	 * @param additionalCapacity
+	 * @throws IllegalStateException if an overflow has occured or max size has been
+	 *                               reached
 	 */
 	private void assureCapacity(int additionalCapacity) {
 		if (free() >= additionalCapacity)
 			return;
-		int newCapacity = (capacity() * 3) / 2 + additionalCapacity;
-		int available = available();
+		int capacity = capacity();
+		if (capacity == maxSize)
+			throw new IllegalStateException("max size reached");
+		int newCapacity = (capacity * 3) / 2 + additionalCapacity;
+		if (maxSize > 0 && newCapacity > maxSize)
+			newCapacity = maxSize;
 		if (newCapacity < 0)
-			throw new IllegalStateException("too much data");
+			throw new IllegalStateException("data has overflown");
 		byte[] newData = new byte[newCapacity];
+		int available = available();
 		getBytes(newData, 0, available);
 		readPosition = 0;
 		writePosition = available;
@@ -328,11 +342,12 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 	public void fillWithStream(@NotNull InputStream inputStream) throws IOException {
 		Assurance.assureNotNull(inputStream);
 		int bytesRead;
-		int bytesAvailable;
+		int available;
 		do {
-			bytesAvailable = Math.max(inputStream.available(), 1);
-			assureCapacity(bytesAvailable);
-			bytesRead = inputStream.read(data, writePosition, bytesAvailable);
+			if ((available = inputStream.available()) == 0)
+				return;
+			assureCapacity(available);
+			bytesRead = inputStream.read(data, writePosition, data.length - writePosition);
 			if (bytesRead > 0)
 				increaseWrite(bytesRead);
 		} while (bytesRead >= 0);
@@ -345,6 +360,25 @@ public class DataQueue implements WritableBuffer, ReadableBuffer {
 		if (available > length) {
 			increaseWrite(length - available);
 		}
+	}
+
+	/**
+	 * sets the maximum size of the internal buffer used in this data structure. if
+	 * maxSize <= 0 then the size is unlimited.
+	 * 
+	 * @param maxSize
+	 */
+	public void setMaxSize(int maxSize) {
+		this.maxSize = maxSize;
+	}
+
+	/**
+	 * @return array of all available bytes
+	 */
+	public byte[] getBytes() {
+		byte[] bytes = new byte[available()];
+		getBytes(bytes);
+		return bytes;
 	}
 
 }
