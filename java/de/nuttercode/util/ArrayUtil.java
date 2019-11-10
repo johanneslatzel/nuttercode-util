@@ -7,6 +7,25 @@ public class ArrayUtil {
 	private final static int COPY_STEPS = 5;
 
 	/**
+	 * concatenates two arrays
+	 * 
+	 * @param left  left-hand operand
+	 * @param right right-hand operand
+	 * @return new array composed of the elements of left followed by right
+	 */
+	public static byte[] concat(byte[] left, byte[] right) {
+		byte[] concat = new byte[left.length + right.length];
+		int a = 0;
+		for (int b = 0; b < left.length; b++, a++) {
+			concat[a] = left[b];
+		}
+		for (int b = 0; b < right.length; b++, a++) {
+			concat[a] = right[b];
+		}
+		return concat;
+	}
+
+	/**
 	 * swaps array[i] with array[j]
 	 * 
 	 * @param array
