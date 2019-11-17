@@ -36,6 +36,41 @@ public final class Assurance {
 	}
 
 	/**
+	 * @param s
+	 * @param domain
+	 * @throws IllegalArgumentException if s is null, domain is empty, or s contains
+	 *                                  a char not contained in domain
+	 */
+	public static void assureDomain(@NotNull String s, @NotEmpty Collection<Character> domain) {
+		Assurance.assureNotNull(s);
+		Assurance.assureNotEmpty(domain);
+		for (char c : s.toCharArray()) {
+			if (!domain.contains(c))
+				throw new IllegalArgumentException("domain does not contain character \"" + c + "\"");
+		}
+	}
+
+	/**
+	 * @param s
+	 * @param domain
+	 * @throws IllegalArgumentException if s is null, domain is empty, or s contains
+	 *                                  a char not contained in domain
+	 */
+	public static void assureDomain(@NotNull String s, @NotEmpty char[] domain) {
+		Assurance.assureNotNull(s);
+		Assurance.assureNotNull(domain);
+		Assurance.assureBoundaries(domain.length, 1, Integer.MAX_VALUE);
+		for (char c : s.toCharArray()) {
+			boolean found = false;
+			for (int a = 0; a < domain.length && !found; a++)
+				if (c == domain[a])
+					found = true;
+			if (!found)
+				throw new IllegalArgumentException("domain does not contain character \"" + c + "\"");
+		}
+	}
+
+	/**
 	 * @param i
 	 * @throws IllegalArgumentException if and only if the argument is not positive
 	 */
