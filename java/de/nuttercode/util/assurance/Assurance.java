@@ -260,4 +260,14 @@ public final class Assurance {
 			throw new IllegalArgumentException(s1 + " equals " + s2);
 	}
 
+	/**
+	 * @param hashedPassword
+	 * @throws IllegalArgumentException if b is null or b.length == 0
+	 */
+	public static void assureNotEmpty(byte[] b) {
+		Assurance.assureNotNull(b);
+		if (b.length == 0)
+			throw new IllegalArgumentException("length of " + b + " is 0");
+	}
+
 }
