@@ -227,6 +227,15 @@ public final class Assurance {
 	 * @param array
 	 * @throws IllegalArgumentException if array is null or if array.length == 0
 	 */
+	public static void assureNotEmpty(char[] array) {
+		if (Assurance.assureNotNull(array).length == 0)
+			throw new IllegalArgumentException();
+	}
+
+	/**
+	 * @param array
+	 * @throws IllegalArgumentException if array is null or if array.length == 0
+	 */
 	public static void assureNotEmpty(String[] array) {
 		if (Assurance.assureNotNull(array).length == 0)
 			throw new IllegalArgumentException();
