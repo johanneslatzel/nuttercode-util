@@ -41,4 +41,15 @@ public class Pair {
 		return new StringPair(i, j);
 	}
 
+	/**
+	 * creates a new {@link StringPair#StringPair(String, String)} (i, j)
+	 * 
+	 * @param i
+	 * @param j
+	 * @return new {@link StringPair#StringPair(String, String)} (i, j)
+	 */
+	public static StringPair of(String i, long j) {
+		return new StringPair(i, Long.toString(j));
+	}
+
 }
